@@ -24,6 +24,10 @@ d3.select('#label-epsilon').html(`Epsilon (${eps})`);
 d3.select('#label-discount').html(`Discount Factor (${gamma})`);
 d3.select('#label-learningRate').html(`Learning Rate (${alpha})`);
 
+d3.select('#s_t').html(katex.renderToString("s_t"));
+d3.select('#a_t').html(katex.renderToString("a_t"));
+d3.select('#pi').html(katex.renderToString("\\pi"));
+d3.select('#r_t').html(katex.renderToString("r_t"));
 
 let sarsaInfo = `
 <h4>
