@@ -9,17 +9,16 @@
 
     <meta property="og:type" content="article" />
     <meta property="og:title" content="Reinforcement Learning Playground" />
-    <meta property="og:url" content="http://playground.tensorflow.org" />
-    <meta property="og:image" content="http://playground.tensorflow.org/preview.png" />
+    <meta property="og:url" content="https://alazareva.github.io/rl_playground" />
+    <meta property="og:image" content="https://alazareva.github.io/rl_playground/preview.png" />
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 
-
     <meta name="twitter:card" value="summary_large_image">
-    <meta name="twitter:title" content="Tensorflow — Neural Network Playground">
-    <meta name="twitter:description" content="Tinker with a real neural network right here in your browser.">
-    <meta name="twitter:url" content="http://playground.tensorflow.org">
-    <meta name="twitter:image" content="http://playground.tensorflow.org/preview.png">
+    <meta name="twitter:title" content="Reinforcement Learning Playground">
+    <meta name="twitter:description" content="In-browser interactive Reinforcement Learning visualization">
+    <meta name="twitter:url" content="https://alazareva.github.io/rl_playground">
+    <meta name="twitter:image" content="https://alazareva.github.io/rl_playground/preview.png">
     <meta name="twitter:image:width" content="560">
     <meta name="twitter:image:height" content="295">
 
@@ -74,7 +73,7 @@
                 </div>
             </div>
             <div class="control ui-learningRate">
-                <label for="learningRate">Learning rate</label>
+                <label for="learningRate" id="label-learningRate"></label>
                 <div class="select">
                     <select id="learningRate">
             <option value="0.01">0.01</option>
@@ -87,7 +86,7 @@
                 </div>
             </div>
             <div class="control ui-epsilon">
-                <label for="epsilon">Epsilon</label>
+                <label for="epsilon" id="label-epsilon"></label>
                 <div class="select">
                     <select id="epsilon">
             <option value="0">0.0</option>
@@ -98,7 +97,7 @@
                 </div>
             </div>
             <div class="control ui-discount">
-                <label for="discount">Discount Factor</label>
+                <label for="discount" id="label-discount"></label>
                 <div class="select">
                     <select id="discount">
             <option value="0">0.0</option>
@@ -119,7 +118,8 @@
                 <h4>
                     <span>Maze Environment</span>
                 </h4>
-                <p>The agent receives a reward of <span style="color:#E69F00;"><b>-0.01</b></span> if it tries to step outsize the grid or onto a wall. It receives a reward of <span style="color:#0072B2;"><b>+10</b></span> if it reaches the goal.</p>
+                <p>The environment has 54 states, corresponding to the cells of the grid, and 4 actions (up, down, left, right). The agent receives a reward of <span style="color:#E69F00;"><b>-0.01</b></span> if it tries to step outsize the grid or onto
+                    a wall. It receives a reward of <span style="color:#0072B2;"><b>+10</b></span> if it reaches the goal.</p>
                 <div id="agent-options" style="display:flex;">
                     <label class="ui-showVisits mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="show-visits">
         <input type="checkbox" id="show-visits" class="mdl-checkbox__input" checked>
@@ -127,7 +127,7 @@
       </label>
                     <label class="ui-showQ mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="show-q">
         <input type="checkbox" id="show-q" class="mdl-checkbox__input" checked>
-        <span class="mdl-checkbox__label label">Show Q-Values</span>
+        <span class="mdl-checkbox__label label">Show Q Values</span>
       </label>
                 </div>
                 <div id="rl_playground">
@@ -144,13 +144,12 @@
 
     <!-- More -->
     <div class="more">
-        <!-- <button class="mdl-button mdl-js-button mdl-button--icon"><i class="material-icons">keyboard_arrow_down</i></button> -->
         <button class="mdl-button mdl-js-button mdl-button--fab">
       <i class="material-icons">keyboard_arrow_down</i>
     </button>
     </div>
-    <!-- Article -->
 
+    <!-- Article -->
     <article id="article-text">
         <div class="l--body">
             <h2>Quick Intro to Reinforcement Learning</h2>
