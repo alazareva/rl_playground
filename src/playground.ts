@@ -16,6 +16,9 @@ const htmlTest = katex.renderToString("\\gamma V(s_{t+1})", {
   throwOnError: false
 });
 
+d3.select('#label-epsilon').html(`Epsilon (${htmlTest})`);
+
+
 let sarsaInfo = `
 <h4>
 <span>Expected SARSA Agent</span>
@@ -155,12 +158,10 @@ let iter = 0;
 function makeGUI() {
   d3.select("#reset-button").on("click", () => {
     reset_agent();
-    userHasInteracted();
   });
 
   d3.select("#play-pause-button").on("click", function () {
     // Change the button's content.
-    userHasInteracted();
     player.playOrPause();
   });
 
@@ -176,8 +177,6 @@ function makeGUI() {
   let learningRate = d3.select("#learningRate").on("change", function() {
     state.learningRate = this.value;
     state.serialize();
-    userHasInteracted();
-    parametersChanged = true;
     agent.set_step_size(state.learningRate)
   });
   learningRate.property("value", state.learningRate);
@@ -185,8 +184,6 @@ function makeGUI() {
   let epsilon = d3.select("#epsilon").on("change", function() {
     state.epsilon = this.value;
     state.serialize();
-    userHasInteracted();
-    parametersChanged = true;
     agent.set_epsilon(state.epsilon)
   });
   epsilon.property("value", state.epsilon);
@@ -194,8 +191,6 @@ function makeGUI() {
   let discount = d3.select("#discount").on("change", function() {
     state.discount = this.value;
     state.serialize();
-    userHasInteracted();
-    parametersChanged = true;
     agent.set_discount(state.discount)
   });
   discount.property("value", state.discount);
@@ -204,7 +199,6 @@ function makeGUI() {
   let agentDropdown = d3.select("#agentType").on("change",
       function() {
     state.agentType = agents[this.value];
-    parametersChanged = true;
     reset_agent();
   });
   agentDropdown.property("value", getKeyFromValue(agents, state.agentType));
@@ -213,7 +207,6 @@ function makeGUI() {
     state.showVisits = this.checked;
     state.serialize();
     rl_display.showVisits = state.showVisits;
-    userHasInteracted();
   });
   // Check/uncheck the checbox according to the current state.
   showVisits.property("checked", state.showVisits);
@@ -222,7 +215,6 @@ function makeGUI() {
     state.showQ = this.checked;
     state.serialize();
     rl_display.showQ = state.showQ;
-    userHasInteracted();
   });
   // Check/uncheck the checbox according to the current state.
   showQ.property("checked", state.showQ);
@@ -245,37 +237,17 @@ function oneStep(): void {
 function reset(onStartup=false) {
   state.serialize();
   if (!onStartup) {
-    userHasInteracted();
   }
   player.pause();
 };
 
-let firstInteraction = true;
-let parametersChanged = false;
-
-function userHasInteracted() {
-  if (!firstInteraction) {
-    return;
-  }
-  firstInteraction = false;
-  let page = 'index';
-  if (state.tutorial != null && state.tutorial !== '') {
-    page = `/v/tutorials/${state.tutorial}`;
-  }
-  ga('set', 'page', page);
-  ga('send', 'pageview', {'sessionControl': 'start'});
-}
+makeGUI();
+d3.select("#iter-number").text(addCommas(zeroPad(episode)));
+reset(true);
 
 function simulationStarted() {
   ga('send', {
     hitType: 'event',
     eventCategory: 'Starting Simulation',
-    eventAction: parametersChanged ? 'changed' : 'unchanged',
-    eventLabel: state.tutorial == null ? '' : state.tutorial
   });
-  parametersChanged = false;
 }
-
-makeGUI();
-d3.select("#iter-number").text(addCommas(zeroPad(episode)));
-reset(true);
