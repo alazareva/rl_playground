@@ -73,7 +73,7 @@
                 </div>
             </div>
             <div class="control ui-learningRate">
-                <label for="learningRate">Learning rate</label>
+                <label for="learningRate" id="label-learningRate"></label>
                 <div class="select">
                     <select id="learningRate">
             <option value="0.01">0.01</option>
@@ -97,7 +97,7 @@
                 </div>
             </div>
             <div class="control ui-discount">
-                <label for="discount">Discount Factor</label>
+                <label for="discount" id="label-discount"></label>
                 <div class="select">
                     <select id="discount">
             <option value="0">0.0</option>
@@ -118,7 +118,8 @@
                 <h4>
                     <span>Maze Environment</span>
                 </h4>
-                <p>The agent receives a reward of <span style="color:#E69F00;"><b>-0.01</b></span> if it tries to step outsize the grid or onto a wall. It receives a reward of <span style="color:#0072B2;"><b>+10</b></span> if it reaches the goal.</p>
+                <p>The environment has 54 states, corresponding to the cells of the grid, and 4 actions (up, down, left, right). The agent receives a reward of <span style="color:#E69F00;"><b>-0.01</b></span> if it tries to step outsize the grid or onto
+                    a wall. It receives a reward of <span style="color:#0072B2;"><b>+10</b></span> if it reaches the goal.</p>
                 <div id="agent-options" style="display:flex;">
                     <label class="ui-showVisits mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="show-visits">
         <input type="checkbox" id="show-visits" class="mdl-checkbox__input" checked>
@@ -126,7 +127,7 @@
       </label>
                     <label class="ui-showQ mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="show-q">
         <input type="checkbox" id="show-q" class="mdl-checkbox__input" checked>
-        <span class="mdl-checkbox__label label">Show Q-Values</span>
+        <span class="mdl-checkbox__label label">Show Q Values</span>
       </label>
                 </div>
                 <div id="rl_playground">

@@ -16,7 +16,13 @@ const htmlTest = katex.renderToString("\\gamma V(s_{t+1})", {
   throwOnError: false
 });
 
-d3.select('#label-epsilon').html(`Epsilon (${htmlTest})`);
+let eps = katex.renderToString("\\varepsilon")
+let gamma = katex.renderToString("\\gamma")
+let alpha = katex.renderToString("\\alpha") 
+
+d3.select('#label-epsilon').html(`Epsilon (${eps})`);
+d3.select('#label-discount').html(`Discount Factor (${gamma})`);
+d3.select('#label-learningRate').html(`Learning Rate (${alpha})`);
 
 
 let sarsaInfo = `

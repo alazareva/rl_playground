@@ -80,7 +80,6 @@ export class ExpectedSarsaAgent implements BaseAgent {
                 prob[i] = prob_best
             }
         }
-        let probas = math.matrix(prob);
         let target = math.multiply(current_q, prob)
 
         let Q_SA = this.q.get([this.prev_observation, this.prev_action])

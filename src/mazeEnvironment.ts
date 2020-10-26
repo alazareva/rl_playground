@@ -143,8 +143,8 @@ class ShortcutMazeEnvironment extends MazeEnvironment {
 
 export class MazeEnvironmentDisplay {
     agent_vis;
-    cell_enter;
-    Qg;
+    cell_vis;
+    Q_vis;
     X;
     Y;
     showQ = true;
@@ -201,7 +201,7 @@ export class MazeEnvironmentDisplay {
 		.attr("width", S(0.95))
         .attr("height", S(0.95)); 
 
-        this.cell_enter = cell_enter;
+        this.cell_vis = cell_enter;
         
         var goal = grid
 		.append("rect")
@@ -225,18 +225,13 @@ export class MazeEnvironmentDisplay {
             .attr("cy", Y(env.current_state[0] + 0.475));
         this.agent_vis = agent_vis;
 
-        var line = d3.svg
-		.line()
-		.x(d => X(d[0]))
-        .y(d => Y(d[1]));
-
         let Q = agent.agent_message('get_Q')
 
         let scaleq = (q, v) => this.scale_q(q, v) 
         if (Q) {
-            this.Qg = this.cell_enter.append("g").attr("class", "Q")
+            this.Q_vis = this.cell_vis.append("g").attr("class", "Q")
 
-            this.Qg
+            this.Q_vis
             .append("path")
             .attr("class", "Q-UP")
             .style("visibility", function (d) { 
@@ -247,7 +242,7 @@ export class MazeEnvironmentDisplay {
             .attr("d", d3.svg.symbol().type("triangle-up"))
             .style("fill",  d => scaleq(Q, Q.get([env.get_observation([d.y, d.x]), 0])));
 
-            this.Qg 
+            this.Q_vis 
             .append("path")
             .attr("class", "Q-DOWN")
             .style("visibility", function (d) { 
@@ -258,7 +253,7 @@ export class MazeEnvironmentDisplay {
             .attr("d", d3.svg.symbol().type("triangle-down"))
             .style("fill",  d => scaleq(Q, Q.get([env.get_observation([d.y, d.x]), 2])));
 
-            this.Qg 
+            this.Q_vis 
             .append("path")
             .attr("class", "Q-LEFT")
             .style("visibility", function (d) { 
@@ -270,7 +265,7 @@ export class MazeEnvironmentDisplay {
             .style("fill",  d => scaleq(Q, Q.get([env.get_observation([d.y, d.x]), 3])));
 
 
-            this.Qg 
+            this.Q_vis 
             .append("path")
             .attr("class", "Q-RIGHT")
             .style("visibility", function (d) { 
@@ -302,27 +297,27 @@ export class MazeEnvironmentDisplay {
             .range(['white', 'gray']);
 
         if (this.showVisits) {
-            this.cell_enter.selectAll('rect').attr("fill", function (d) { 
+            this.cell_vis.selectAll('rect').attr("fill", function (d) { 
                 if (d.wall) return "#E69F00"
                 return getColor(visited[d.y][d.x]); 
         });
     } else {
-        this.cell_enter.selectAll('rect').attr("fill", d => d.wall? "#E69F00": "white")
+        this.cell_vis.selectAll('rect').attr("fill", d => d.wall? "#E69F00": "white")
     }
         let Q = agent.agent_message('get_Q')
         let scaleq = (q, v) => this.scale_q(q, v) 
         if (Q && this.showQ) {
-            this.Qg.attr("class", "Q")
-            this.Qg.select(".Q-UP")
+            this.Q_vis.attr("class", "Q")
+            this.Q_vis.select(".Q-UP")
             .style("fill",  d => scaleq(Q, Q.get([env.get_observation([d.y, d.x]), 0])));
-            this.Qg.select(".Q-RIGHT")
+            this.Q_vis.select(".Q-RIGHT")
             .style("fill",  d => scaleq(Q, Q.get([env.get_observation([d.y, d.x]), 1])));
-            this.Qg.select(".Q-DOWN")
+            this.Q_vis.select(".Q-DOWN")
             .style("fill",  d => scaleq(Q, Q.get([env.get_observation([d.y, d.x]), 2])));
-            this.Qg.select(".Q-LEFT")
+            this.Q_vis.select(".Q-LEFT")
             .style("fill",  d => scaleq(Q, Q.get([env.get_observation([d.y, d.x]), 3])));
     } else if (!this.showQ){
-        this.Qg.attr("class", "hide-q")
+        this.Q_vis.attr("class", "hide-q")
     }
 }
     scale_q(Q, v) {
