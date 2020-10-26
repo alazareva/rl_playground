@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "skipLibCheck": true
+    },
+  "exclude": [
+    "node_modules" 
+  ]
+}
