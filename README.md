@@ -5,7 +5,7 @@ lets users interact with and visualize different Reinforcement Learning agents i
 the browser. Is was inspired by the original Tensorflow Playground as well as the 
 Coursera Reinforcement Learning Specialization.
 
-## Local Developing
+## Local Development
 
 - `npm i`
 - `npm run build` 

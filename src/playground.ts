@@ -10,12 +10,17 @@ import {QLearningAgent} from './qlearning'
 import {ExpectedSarsaAgent} from './expectedSarsa'
 import {DynaQAgent} from './dynaQAgent';
 import * as maze from './mazeEnvironment';
+const katex = require('katex');
+
+const htmlTest = katex.renderToString("\\gamma V(s_{t+1})", {
+  throwOnError: false
+});
 
 let sarsaInfo = `
 <h4>
 <span>Expected SARSA Agent</span>
 </h4>
-<p> The agent works by blah blah </p>`;
+<p> The agent works by blah blah </p><p> ${htmlTest} </p>`;
 
 let qAgentInfo = `
 <h4>

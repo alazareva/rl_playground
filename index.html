@@ -12,6 +12,9 @@
     <meta property="og:url" content="http://playground.tensorflow.org" />
     <meta property="og:image" content="http://playground.tensorflow.org/preview.png" />
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+
+
     <meta name="twitter:card" value="summary_large_image">
     <meta name="twitter:title" content="Tensorflow — Neural Network Playground">
     <meta name="twitter:description" content="Tinker with a real neural network right here in your browser.">
@@ -29,7 +32,7 @@
 
 <body>
     <!-- GitHub link -->
-    <a class="github-link" href="https://github.com/tensorflow/playground" title="Source on GitHub" target="_blank">
+    <a class="github-link" href="https://github.com/alazareva/rl_playground" title="Source on GitHub" target="_blank">
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 60.5 60.5" width="60" height="60">
       <polygon class="bg" points="60.5,60.5 0,0 60.5,0 "/>
       <path class="icon" d="M43.1,5.8c-6.6,0-12,5.4-12,12c0,5.3,3.4,9.8,8.2,11.4c0.6,0.1,0.8-0.3,0.8-0.6c0-0.3,0-1,0-2c-3.3,0.7-4-1.6-4-1.6c-0.5-1.4-1.3-1.8-1.3-1.8c-1.1-0.7,0.1-0.7,0.1-0.7c1.2,0.1,1.8,1.2,1.8,1.2c1.1,1.8,2.8,1.3,3.5,1c0.1-0.8,0.4-1.3,0.8-1.6c-2.7-0.3-5.5-1.3-5.5-5.9c0-1.3,0.5-2.4,1.2-3.2c-0.1-0.3-0.5-1.5,0.1-3.2c0,0,1-0.3,3.3,1.2c1-0.3,2-0.4,3-0.4c1,0,2,0.1,3,0.4c2.3-1.6,3.3-1.2,3.3-1.2c0.7,1.7,0.2,2.9,0.1,3.2c0.8,0.8,1.2,1.9,1.2,3.2c0,4.6-2.8,5.6-5.5,5.9c0.4,0.4,0.8,1.1,0.8,2.2c0,1.6,0,2.9,0,3.3c0,0.3,0.2,0.7,0.8,0.6c4.8-1.6,8.2-6.1,8.2-11.4C55.1,11.2,49.7,5.8,43.1,5.8z"/>
@@ -116,7 +119,7 @@
                 <h4>
                     <span>Maze Environment</span>
                 </h4>
-                <p>The agent receives a reward of <span style="color:#E69F00;"><b>-0.01</b></span> if it ties to step outsize the grid or onto a wall. It receives a reward of <span style="color:#0072B2;"><b>+10</b></span> if it reaches the goal.</p>
+                <p>The agent receives a reward of <span style="color:#E69F00;"><b>-0.01</b></span> if it tries to step outsize the grid or onto a wall. It receives a reward of <span style="color:#0072B2;"><b>+10</b></span> if it reaches the goal.</p>
                 <div id="agent-options" style="display:flex;">
                     <label class="ui-showVisits mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="show-visits">
         <input type="checkbox" id="show-visits" class="mdl-checkbox__input" checked>
@@ -149,6 +152,13 @@
     <!-- Article -->
 
     <article id="article-text">
+        <div class="l--body">
+            <h2>Quick Intro to Reinforcement Learning</h2>
+            <p>
+                Give a brief introduction.
+
+            </p>
+        </div>
         <div class="l--body">
             <h2>About this Project</h2>
             <p> This project was inspired by the <a href="https://playground.tensorflow.org/">TensorFlow Playground</a> project and the <a href="https://www.coursera.org/specializations/reinforcement-learning">Coursera Reinforcement Learning Specialization</a>.
