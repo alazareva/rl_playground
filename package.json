@@ -1,5 +1,6 @@
 {
     "name": "rl_playground",
+    "homepage": "https://github.com/alazareva/rl_playground",
     "version": "2020.0.1",
     "description": "",
     "private": true,
@@ -16,7 +17,9 @@
         "build": "npm run prep && npm run build-js && npm run build-css && npm run build-html",
         "watch": "npm run prep && concurrently \"npm run watch-js\" \"npm run watch-css\" \"npm run watch-html\"",
         "serve": "npx serve dist/",
-        "serve-watch": "concurrently \"npx serve dist/\" \"npm run watch\""
+        "serve-watch": "concurrently \"npx serve dist/\" \"npm run watch\"",
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d dist"
     },
     "devDependencies": {
         "@types/d3": "^3.5.34",
@@ -24,6 +27,7 @@
         "concat": "^1.0.3",
         "concurrently": "3.1.0",
         "copyfiles": "1.0.0",
+        "gh-pages": "^3.1.0",
         "jest": "^26.1.0",
         "rimraf": "2.5.4",
         "serve": "^11.3.0",
