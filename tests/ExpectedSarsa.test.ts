@@ -15,7 +15,6 @@ describe("QLearningAgent", () => {
         let agent = new ExpectedSarsaAgent();
         agent.agent_init(agent_info);
         let action = agent.agent_start(0);
-        console.log(agent.q)
         assert.deepStrictEqual(math.matrix(math.zeros([3, 4])), agent.q);
     });
 
