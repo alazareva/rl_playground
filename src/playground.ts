@@ -12,9 +12,8 @@ import {DynaQAgent} from './dynaQAgent';
 import * as maze from './mazeEnvironment';
 const katex = require('katex');
 
-const htmlTest = katex.renderToString("\\gamma V(s_{t+1})", {
-  throwOnError: false
-});
+let sarsa_eq = katex.renderToString("Q\\left(S_{t}, A_{t}\\right) \\leftarrow Q\\left(S_{t}, A_{t}\\right) + \\alpha\\left[R_{t+1} + \\gamma\\sum_{a}\\pi\\left(a\\mid{S_{t+1}}\\right)Q\\left(S_{t+1}, a\\right) - Q\\left(S_{t}, A_{t}\\right)\\right]")
+let q_eq = katex.renderToString("Q\\left(S_{t}, A_{t}\\right) \\leftarrow Q\\left(S_{t}, A_{t}\\right) + \\alpha\\left[R_{t+1} + \\gamma\\max_{a}Q\\left(S_{t+1}, a\\right) - Q\\left(S_{t}, A_{t}\\right)\\right]")
 
 let eps = katex.renderToString("\\varepsilon")
 let gamma = katex.renderToString("\\gamma")
@@ -24,33 +23,60 @@ d3.select('#label-epsilon').html(`Epsilon (${eps})`);
 d3.select('#label-discount').html(`Discount Factor (${gamma})`);
 d3.select('#label-learningRate').html(`Learning Rate (${alpha})`);
 
-d3.select('#s_t').html(katex.renderToString("s_t"));
-d3.select('#a_t').html(katex.renderToString("a_t"));
+d3.select('#s_t').html(katex.renderToString("S_t"));
+d3.select('#a_t').html(katex.renderToString("A_t"));
 d3.select('#pi').html(katex.renderToString("\\pi"));
-d3.select('#r_t').html(katex.renderToString("r_t"));
+d3.select('#r_t').html(katex.renderToString("R_t"));
 
-let sarsaInfo = `
+let q_table_info = `The agent keeps a reference to a Q table which
+maps state-action pairs to their respective Q-values. These values are updated as the agent interacts with
+the environment and receives rewards for its actions. The agent uses the information stored in the Q table
+to choose actions based on its policy. The Q-values for each action-state pair are displayed on the 
+grid, positive values are shown in blue and negative values shown in orange.`
+
+let sarsa_info = `
 <h4>
 <span>Expected SARSA Agent</span>
 </h4>
-<p> The agent works by blah blah </p><p> ${htmlTest} </p>`;
+<p>SARSA stands for State-Action-Reward-State-Action.</p><br><p>${q_table_info}</p> <br><br> <p>${sarsa_eq}</p>
+<br><br><p>The Expected SARSA update uses the expected value over all possible next state-action pairs
+ weighted by the probability of each action being selected under the current policy.</p> `;
 
-let qAgentInfo = `
-<h4>
-<span>Q-Learning Agent</span>
-</h4>
-<p> The agent works by blah blah </p>`;
+let q_agent_info = `
+<h4><span>Q-Learning Agent</span></h4>
+<p>${q_table_info}</p> <br><br> <p>${q_eq}</p>
+<br><br><p>The Q table is updated based on the maximum next state-action Q-value.</p> `;
 
-let dynaQInfo = `
-<h4>
-<span>Dyna-Q  Agent</span>
-</h4>
-<p> The agent works by blah blah </p>`;
+let dyna_q_info = `
+<h4><span>Dyna-Q Agent</span></h4>
+<p>${q_table_info}</p> <br><br><p>${q_eq}</p><br>
+<p>The Dyna-Q agent uses the same update strategy as the Q-Learning agent, but it introduces
+an additional strategy: planning. At every step, the agent simulates 10 'experiences' by selecting
+state-action pairs at random and using the Q-learning step to update their Q-table values. Using this planning
+strategy, the agent can learn faster by combining information from real and simulated experiences.</p>`;
+
+let parameter_info = `
+<h3>Epsilon (${eps})</h3>
+<p>The agent follows an ${eps}-greedy policy. It will choose the action corresponding to the highest 
+value 1 - ${eps} percent of the time. To encourage exploration, the agent will pick a random action 
+with probability ${eps}. The exploration rate can be reduced during training once the agent has explored enough of the state space.
+
+<h3>Learning Rate (${alpha})</h3>
+<p>This parameter, also known as the step size, controls the magnitude of the agent update at each step. 
+If the learning rate is high, new information will be given a larger weight when updating the agent’s Q-values</p>
+
+<h3>Discount Factor Rate (${gamma})</h3>
+ <p>The discount factor is used to compute the present value of future rewards. 
+ In other words, how much the agent values rewards that it will receive farther into the future. 
+ A discount rate of 0 will make the agent strive to maximize immediate rewards,
+while a discount rate closer to 1 will lead to decisions based on more long-term outcomes.</p>
+`
+d3.select('#param-info').html(parameter_info);
 
 let agent_details = {
-  "expectedSarsa": sarsaInfo,
-  "qLearning": qAgentInfo,
-  "dynaQ": dynaQInfo,
+  "expectedSarsa": sarsa_info,
+  "qLearning": q_agent_info,
+  "dynaQ": dyna_q_info,
 }
 var episode = 0;
 
@@ -153,6 +179,7 @@ class Player {
       let is_terminal = rl_step_results[3];
       rl_display.update(env, agent)
       if (is_terminal) {
+        d3.select("#episode-reward").text(rl_glue.rl_return().toFixed(3));
         rl_glue.rl_start()
       }
       episode = rl_glue.rl_num_episodes();
@@ -205,10 +232,10 @@ function makeGUI() {
   });
   discount.property("value", state.discount);
 
-
   let agentDropdown = d3.select("#agentType").on("change",
       function() {
     state.agentType = agents[this.value];
+    state.serialize();
     reset_agent();
   });
   agentDropdown.property("value", getKeyFromValue(agents, state.agentType));
@@ -242,6 +269,7 @@ function makeGUI() {
 function oneStep(): void {
   iter++;
   d3.select("#iter-number").text(addCommas(zeroPad(episode)));
+  d3.select("#episode-reward").text(rl_glue.rl_prev_reward().toFixed(3));
 }
 
 function reset(onStartup=false) {
@@ -253,6 +281,7 @@ function reset(onStartup=false) {
 
 makeGUI();
 d3.select("#iter-number").text(addCommas(zeroPad(episode)));
+d3.select("#episode-reward").text("0.000");
 reset(true);
 
 function simulationStarted() {

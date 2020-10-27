@@ -1,4 +1,5 @@
 # Reinforcement Learning Playground
+![Example](https://github.com/alazareva/rl_playground/blob/master/example.png)
 
 Reinforcement Learning Playground is an interactive TypeScript application that
 lets users interact with and visualize different Reinforcement Learning agents in 

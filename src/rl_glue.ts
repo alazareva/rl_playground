@@ -16,6 +16,7 @@ export class RLGlue {
     last_action?: Action;
     num_steps: number;
     num_episodes: number ;
+    prev_episode_reward: number
 
     constructor(env_class:  BaseEnvironment, agent_class: BaseAgent) {
         this.environment = env_class;
@@ -24,6 +25,8 @@ export class RLGlue {
         this.total_reward = 0.0;
         this.num_steps = 0;
         this.num_episodes = 0;
+
+        this.prev_episode_reward = 0;
 
     }
 
@@ -64,6 +67,7 @@ export class RLGlue {
     }
 
     rl_env_fast_forward(){
+        this.total_reward = 0.0;
         this.num_episodes += 1;
         return this.environment.env_start();
     }
@@ -97,6 +101,7 @@ export class RLGlue {
             this.agent.agent_end(this_reward);
             ret = [this_reward, last_state, undefined, terminal];
             this.num_episodes += 1
+            this.prev_episode_reward = this.total_reward;
         }
         else {
             this.num_steps += 1;
@@ -144,5 +149,9 @@ export class RLGlue {
     // The number of episodes
     rl_num_episodes(): number {
         return this.num_episodes;
+    }
+
+    rl_prev_reward(): number {
+        return this.prev_episode_reward;
     }
 }

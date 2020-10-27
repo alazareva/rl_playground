@@ -10,7 +10,7 @@
     <meta property="og:type" content="article" />
     <meta property="og:title" content="Reinforcement Learning Playground" />
     <meta property="og:url" content="https://alazareva.github.io/rl_playground" />
-    <meta property="og:image" content="https://alazareva.github.io/rl_playground/preview.png" />
+    <meta property="og:image" content="https://alazareva.github.io/rl_playground/example.png" />
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 
@@ -18,9 +18,9 @@
     <meta name="twitter:title" content="Reinforcement Learning Playground">
     <meta name="twitter:description" content="In-browser interactive Reinforcement Learning visualization">
     <meta name="twitter:url" content="https://alazareva.github.io/rl_playground">
-    <meta name="twitter:image" content="https://alazareva.github.io/rl_playground/preview.png">
-    <meta name="twitter:image:width" content="560">
-    <meta name="twitter:image:height" content="295">
+    <meta name="twitter:image" content="https://alazareva.github.io/rl_playground/example.png">
+    <meta name="twitter:image:width" content="580">
+    <meta name="twitter:image:height" content="332">
 
     <meta name="author" content="Anastasiya Lazareva">
     <title>Reinforcement Learning Playground</title>
@@ -61,6 +61,10 @@
             <div class="control">
                 <span class="label">Episode</span>
                 <span class="value" id="iter-number"></span>
+            </div>
+            <div class="control">
+                <span class="label">Previous Episode Reward</span>
+                <span class="value" id="episode-reward"></span>
             </div>
             <div class="control ui-agent">
                 <label for="agentType">Agent Type</label>
@@ -156,13 +160,17 @@
             <p>
                 A typical Reinforcement Learning problem consists of an Agent and an Environment. At each time step, the agent receives information from the environment about its current state (<span id='s_t'></span>) and uses that information to choose
                 an action (<span id='a_t'></span>) based on a policy (<span id='pi'></span>). After taking the action, the agent receives a reward (<span id='r_t'></span>). Learning can take place over multiple episodes, an episode ends when the agent
-                achieves its goal. The agent can use the information it receives from the environment to update its policy. In the Maze Environment problem, the state corresponds to the agent’s location in the grid and the actions correspond to moving
-                to any of the neighboring cells. The agent receives a reward of 10 when it reaches the goal and a penalty of 0.01 when it tries to make an illegal move like moving outside the grid or stepping on a wall.
+                achieves its goal. In the Maze Environment problem, the state corresponds to the agent’s location in the grid and the actions correspond to moving to any of the neighboring cells. The agent receives a reward of 10 when it reaches the goal
+                and a penalty of 0.01 when it tries to make an illegal move like moving outside the grid or stepping on a wall.
             </p>
         </div>
         <div class="l--body">
+            <h2>Hyperparameters</h2>
+            <div id="param-info"> </div>
+        </div>
+        <div class="l--body">
             <h2>Acknowledgements</h2>
-            <p> This project was inspired by the <a href="https://playground.tensorflow.org/" target="_blank">TensorFlow Playground</a> project and the <a href="https://www.coursera.org/specializations/reinforcement-learning" target="_blank">Coursera Reinforcement Learning Specialization</a>                which is based on Richard <a href="http://incompleteideas.net/book/the-book-2nd.html" target="_blank">Sutton’s Reinforcement Learning: An Introduction</a> textbook. Many of the UI elements on this page come from the TensorFlow Playground
+            <p> This project was inspired by the <a href="https://playground.tensorflow.org/" target="_blank">TensorFlow Playground</a> project and the <a href="https://www.coursera.org/specializations/reinforcement-learning" target="_blank">Coursera Reinforcement Learning Specialization</a>                which is based on Richard Sutton’s<a href="http://incompleteideas.net/book/the-book-2nd.html" target="_blank">Reinforcement Learning: An Introduction</a> textbook. Many of the UI elements on this page come from the TensorFlow Playground
                 project. The agent implementations are based on homework assignments from the Coursera Reinforcement Learning Specialization.
             </p>
         </div>
